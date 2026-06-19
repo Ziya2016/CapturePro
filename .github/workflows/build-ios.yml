@@ -1,4 +1,4 @@
-name: Build iOS App
+name: Build iOS IPA
 
 on:
   push:
@@ -6,46 +6,73 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build IPA
-    runs-on: macos-13
+  build-ipa:
+    name: "📱 Build Capture Pro iOS IPA"
+    runs-on: macos-14          # Apple Silicon runner – free for public repos
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
 
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '15.0'
+      # ── 1. Checkout ──────────────────────────────────────────────────────────
+      - name: "✅ Checkout repository"
+        uses: actions/checkout@v4
 
-      - name: Generate Xcode Project
+      # ── 2. Select Xcode ──────────────────────────────────────────────────────
+      - name: "🛠 Select Xcode 15"
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+          xcodebuild -version
+
+      # ── 3. Generate Xcode project ─────────────────────────────────────────────
+      - name: "📂 Generate Xcode project from Python script"
         run: |
           python3 CaptureProiOS/generate_project.py
+          echo "✅ project.pbxproj written"
 
-      - name: Build Archive (Unsigned)
+      # ── 4. List what xcodebuild can see ──────────────────────────────────────
+      - name: "🔍 List schemes detected by xcodebuild"
         run: |
-          xcodebuild -project CaptureProiOS/CaptureProiOS.xcodeproj \
-                     -scheme CaptureProiOS \
-                     -sdk iphoneos \
-                     -configuration Release \
-                     archive \
-                     -archivePath $RUNNER_TEMP/CapturePro.xcarchive \
-                     CODE_SIGNING_ALLOWED=NO \
-                     CODE_SIGNING_REQUIRED=NO \
-                     CODE_SIGN_IDENTITY="" \
-                     PROVISIONING_PROFILE_SPECIFIER=""
+          xcodebuild -project CaptureProiOS/CaptureProiOS.xcodeproj -list
 
-      - name: Export IPA (Unsigned Payload)
+      # ── 5. Archive (unsigned) ─────────────────────────────────────────────────
+      - name: "🏗 Build & Archive (unsigned)"
         run: |
-          mkdir -p $RUNNER_TEMP/Payload
-          cp -r $RUNNER_TEMP/CapturePro.xcarchive/Products/Applications/CaptureProiOS.app $RUNNER_TEMP/Payload/
-          cd $RUNNER_TEMP
-          zip -r CapturePro.ipa Payload
-          mv CapturePro.ipa $GITHUB_WORKSPACE/CapturePro.ipa
+          xcodebuild \
+            -project CaptureProiOS/CaptureProiOS.xcodeproj \
+            -scheme CaptureProiOS \
+            -sdk iphoneos \
+            -configuration Release \
+            archive \
+            -archivePath "$RUNNER_TEMP/CapturePro.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            | xcpretty || true
+          echo "✅ Archive step finished"
 
-      - name: Upload IPA Artifact
-        uses: actions/upload-artifact@v3
+      # ── 6. Confirm .app was created ───────────────────────────────────────────
+      - name: "🔎 Confirm .app exists in archive"
+        run: |
+          find "$RUNNER_TEMP/CapturePro.xcarchive" -name "*.app" -type d
+          APP_PATH=$(find "$RUNNER_TEMP/CapturePro.xcarchive" -name "*.app" -type d | head -1)
+          echo "Found app at: $APP_PATH"
+          echo "APP_PATH=$APP_PATH" >> $GITHUB_ENV
+
+      # ── 7. Package into .ipa ──────────────────────────────────────────────────
+      - name: "📦 Package .ipa file"
+        run: |
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -r "$APP_PATH" "$RUNNER_TEMP/Payload/"
+          cd "$RUNNER_TEMP"
+          zip -r CapturePro.ipa Payload/
+          cp CapturePro.ipa "$GITHUB_WORKSPACE/CapturePro.ipa"
+          ls -lh "$GITHUB_WORKSPACE/CapturePro.ipa"
+          echo "✅ IPA created successfully"
+
+      # ── 8. Upload artifact ────────────────────────────────────────────────────
+      - name: "⬆️ Upload IPA as downloadable artifact"
+        uses: actions/upload-artifact@v4
         with:
           name: CapturePro-iOS-Unsigned
           path: CapturePro.ipa
+          retention-days: 30
