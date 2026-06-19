@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App launcher icon foreground — orange camera shape -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Camera body -->
+    <path
+        android:fillColor="#FF6D00"
+        android:pathData="
+        M74,42H65.8L62,37H46L42.2,42H34
+        C31.8,42 30,43.8 30,46
+        V72
+        C30,74.2 31.8,76 34,76
+        H74
+        C76.2,76 78,74.2 78,72
+        V46
+        C78,43.8 76.2,42 74,42Z"/>
+
+    <!-- Lens ring -->
+    <path
+        android:fillColor="#0D1117"
+        android:pathData="
+        M54,70
+        A11,11 0 0,1 43,59
+        A11,11 0 0,1 54,48
+        A11,11 0 0,1 65,59
+        A11,11 0 0,1 54,70Z"/>
+
+    <!-- Lens highlight -->
+    <path
+        android:fillColor="#FF6D00"
+        android:pathData="
+        M54,67
+        A8,8 0 0,1 46,59
+        A8,8 0 0,1 54,51
+        A8,8 0 0,1 62,59
+        A8,8 0 0,1 54,67Z"/>
+
+    <!-- Lens center dot -->
+    <path
+        android:fillColor="#0D1117"
+        android:pathData="
+        M54,63
+        A4,4 0 0,1 50,59
+        A4,4 0 0,1 54,55
+        A4,4 0 0,1 58,59
+        A4,4 0 0,1 54,63Z"/>
+
+    <!-- Flash dot -->
+    <path
+        android:fillColor="#FF6D00"
+        android:pathData="M68,47 A3,3 0 0,1 65,50 A3,3 0 0,1 62,47 A3,3 0 0,1 65,44 A3,3 0 0,1 68,47Z"/>
+
+</vector>

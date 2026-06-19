@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ── Backgrounds ─────────────────────────────────────────────────── -->
+    <color name="bg_dark">#0D1117</color>
+    <color name="bg_header">#0A0A18</color>
+    <color name="bg_card">#161B26</color>
+
+    <!-- ── Accents ─────────────────────────────────────────────────────── -->
+    <color name="accent_orange">#FF6D00</color>
+    <color name="accent_red">#E53935</color>
+    <color name="accent_purple">#7B1FA2</color>
+    <color name="accent_purple_dark">#6A1589</color>
+    <color name="accent_blue">#1565C0</color>
+    <color name="accent_blue_dark">#0D47A1</color>
+    <color name="accent_green">#2E7D32</color>
+
+    <!-- ── Text ────────────────────────────────────────────────────────── -->
+    <color name="white">#FFFFFF</color>
+    <color name="text_secondary">#8899AA</color>
+
+    <!-- ── Misc ────────────────────────────────────────────────────────── -->
+    <color name="divider">#1E2A38</color>
+    <color name="input_bg">#1C2535</color>
+    <color name="input_stroke">#2E4060</color>
+    <color name="preview_border">#FF6D00</color>
+    <color name="thumbnail_border">#FFFFFF</color>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Capture Pro</string>
+    <string name="capture_btn_label">CAPTURE PHOTO</string>
+    <string name="change_location">Change Location</string>
+    <string name="reset">Reset</string>
+    <string name="tag_no_hint">Enter Tag No…</string>
+    <string name="no_images_captured">No images captured</string>
+    <string name="live_preview">Live Preview</string>
+    <string name="camera_source">Camera Source</string>
+    <string name="image_save_loc">Image Save Loc</string>
+    <string name="no_location_set">No location set</string>
+    <string name="total_count_prefix">Total images saved qty: </string>
+</resources>

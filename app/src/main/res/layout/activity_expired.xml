@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/bg_dark"
+    android:padding="32dp">
+
+    <!-- Lock icon -->
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="🔒"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:background="@drawable/bg_expired_icon"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="License Expired"
+        android:textColor="@color/accent_red"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <!-- App name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Capture Pro"
+        android:textColor="@color/accent_orange"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"
+        android:gravity="center"/>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="60dp"
+        android:layout_height="2dp"
+        android:background="@color/accent_red"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Message -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This application expired on\n31 December 2026."
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please contact your administrator\nto renew your license."
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginTop="12dp"/>
+
+</LinearLayout>

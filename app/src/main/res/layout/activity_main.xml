@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark">
+
+    <!-- ═══════════════════════════════ HEADER ════════════════════════════ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:background="@color/bg_header"
+        android:elevation="4dp">
+
+        <!-- Logo badge -->
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="C"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:background="@drawable/bg_logo_badge"/>
+
+        <!-- Title and Developer credit container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- "Capture" in orange -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Capture"
+                    android:textColor="@color/accent_orange"
+                    android:textStyle="bold"
+                    android:textSize="17sp"/>
+
+                <!-- " Pro" in white -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Pro"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="17sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="developed by Anees Ariyakkal"
+                android:textColor="@color/text_secondary"
+                android:textSize="9sp"
+                android:layout_marginTop="1dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- ═══════════════════════════ SCROLLABLE BODY ═══════════════════════ -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- ── Save Location Card ─────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_card"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Image Save Loc"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvSaveLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No location set"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginTop="3dp"
+                        android:ellipsize="start"
+                        android:singleLine="true"/>
+
+                    <Button
+                        android:id="@+id/btnChangeLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Change Location"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/bg_btn_location"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginTop="8dp"
+                        android:stateListAnimator="@null"/>
+                </LinearLayout>
+
+                <!-- Last Image Preview (relocated to top right corner as requested) -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Preview"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <ImageView
+                        android:id="@+id/ivLastImagePreview"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_thumbnail_border"
+                        android:padding="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- ── Tag No Row ──────────────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tag No"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="13sp"/>
+
+                <EditText
+                    android:id="@+id/etTagNo"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:hint="Enter Tag No..."
+                    android:textColorHint="@color/text_secondary"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:inputType="textNoSuggestions"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+                <ImageButton
+                    android:id="@+id/btnScan"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_btn_scan"
+                    android:src="@drawable/ic_scan"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="Scan Barcode"/>
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="72dp"
+                    android:layout_height="46dp"
+                    android:text="Reset"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/bg_btn_reset"
+                    android:layout_marginStart="8dp"
+                    android:stateListAnimator="@null"/>
+            </LinearLayout>
+
+            <!-- ── Total Count Row ────────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/tvTotalCount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total images saved qty: 0"
+                    android:textColor="@color/accent_red"
+                    android:textStyle="bold"
+                    android:textSize="13sp"/>
+
+                <EditText
+                    android:id="@+id/etMinQty"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_count_badge"
+                    android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <!-- ── Preview Frame ──────────────────────────────────────────── -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@drawable/bg_preview_frame"
+                android:padding="3dp"
+                android:layout_marginTop="12dp">
+
+                <!-- Live camera feed -->
+                <androidx.camera.view.PreviewView
+                    android:id="@+id/previewView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                 <!-- Placeholder before camera starts -->
+                <TextView
+                    android:id="@+id/tvLiveLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Live Preview"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="17sp"
+                    android:visibility="visible"/>
+
+                <!-- Flash toggle button — top-left overlay -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnFlash"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_btn_flash_off"
+                        android:src="@drawable/ic_flash"
+                        android:padding="8dp"
+                        android:contentDescription="Toggle Flash"/>
+
+                    <TextView
+                        android:id="@+id/tvFlashLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OFF"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="9sp"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- ── Capture Button ─────────────────────────────────────────── -->
+            <Button
+                android:id="@+id/btnCapture"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/capture_btn_label"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:letterSpacing="0.08"
+                android:background="@drawable/bg_btn_capture"
+                android:layout_marginTop="12dp"
+                android:stateListAnimator="@null"/>
+
+            <!-- ── Camera Source ──────────────────────────────────────────── -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera Source"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:layout_marginTop="14dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerCamera"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_spinner"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

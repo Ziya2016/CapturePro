@@ -1,0 +1,51 @@
+name: Build iOS App
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build IPA
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.0'
+
+      - name: Generate Xcode Project
+        run: |
+          python3 CaptureProiOS/generate_project.py
+
+      - name: Build Archive (Unsigned)
+        run: |
+          xcodebuild -project CaptureProiOS/CaptureProiOS.xcodeproj \
+                     -scheme CaptureProiOS \
+                     -sdk iphoneos \
+                     -configuration Release \
+                     archive \
+                     -archivePath $RUNNER_TEMP/CapturePro.xcarchive \
+                     CODE_SIGNING_ALLOWED=NO \
+                     CODE_SIGNING_REQUIRED=NO \
+                     CODE_SIGN_IDENTITY="" \
+                     PROVISIONING_PROFILE_SPECIFIER=""
+
+      - name: Export IPA (Unsigned Payload)
+        run: |
+          mkdir -p $RUNNER_TEMP/Payload
+          cp -r $RUNNER_TEMP/CapturePro.xcarchive/Products/Applications/CaptureProiOS.app $RUNNER_TEMP/Payload/
+          cd $RUNNER_TEMP
+          zip -r CapturePro.ipa Payload
+          mv CapturePro.ipa $GITHUB_WORKSPACE/CapturePro.ipa
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: CapturePro-iOS-Unsigned
+          path: CapturePro.ipa

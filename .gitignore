@@ -1,0 +1,32 @@
+# Gradle files
+.gradle/
+build/
+app/build/
+
+# Local configuration
+local.properties
+
+# Android Studio / IntelliJ IDE files
+.idea/
+*.iml
+.navigation/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Xcode / iOS temporary files
+CaptureProiOS/build/
+CaptureProiOS/*.xcuserdata/
+CaptureProiOS/*.xcworkspace/xcuserdata/
+CaptureProiOS/CaptureProiOS.xcodeproj/xcuserdata/
+CaptureProiOS/CaptureProiOS.xcodeproj/project.xcworkspace/xcuserdata/
+CaptureProiOS/.DS_Store
+
+# Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
