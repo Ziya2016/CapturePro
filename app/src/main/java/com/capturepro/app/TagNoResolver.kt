@@ -14,28 +14,29 @@ object TagNoResolver {
 
     /**
      * Scans [folder] for existing files whose name starts with [tagNo] and
-     * returns the next available filename (with .jpg extension).
+     * returns the next available filename (with dynamic [ext] extension, e.g. "jpg" or "png").
      */
-    fun resolveFileName(folder: DocumentFile, tagNo: String): String {
+    fun resolveFileName(folder: DocumentFile, tagNo: String, ext: String): String {
         val baseName = sanitize(tagNo)
 
-        // Collect all existing jpg names inside the folder
+        // Collect all existing names with this extension inside the folder
+        val suffix = ".$ext"
         val existing: Set<String> = folder.listFiles()
             .mapNotNull { it.name?.lowercase() }
-            .filter { it.endsWith(".jpg") }
+            .filter { it.endsWith(suffix) }
             .toHashSet()
 
         // Try base name first
-        if ("${baseName.lowercase()}.jpg" !in existing) {
-            return "$baseName.jpg"
+        if ("${baseName.lowercase()}$suffix" !in existing) {
+            return "$baseName$suffix"
         }
 
         // Increment suffix until a free slot is found
         var index = 2
-        while ("${baseName.lowercase()}_$index.jpg" in existing) {
+        while ("${baseName.lowercase()}_$index$suffix" in existing) {
             index++
         }
-        return "${baseName}_$index.jpg"
+        return "${baseName}_$index$suffix"
     }
 
     /** Strip filesystem-unsafe characters from the tag string. */
@@ -52,7 +53,7 @@ object TagNoResolver {
             val files = folder.listFiles()
             files.count { file ->
                 val name = file.name?.lowercase() ?: ""
-                if (!name.endsWith(".jpg") && !name.endsWith(".jpeg")) return@count false
+                if (!name.endsWith(".jpg") && !name.endsWith(".jpeg") && !name.endsWith(".png")) return@count false
                 val baseWithoutExt = name.substringBeforeLast(".")
                 baseWithoutExt == baseName || (baseWithoutExt.startsWith("${baseName}_") &&
                         baseWithoutExt.substring(baseName.length + 1).all { it.isDigit() })
@@ -72,7 +73,7 @@ object TagNoResolver {
             val files = folder.listFiles()
             val matchingFiles = files.filter { file ->
                 val name = file.name?.lowercase() ?: ""
-                if (!name.endsWith(".jpg") && !name.endsWith(".jpeg")) return@filter false
+                if (!name.endsWith(".jpg") && !name.endsWith(".jpeg") && !name.endsWith(".png")) return@filter false
                 val baseWithoutExt = name.substringBeforeLast(".")
                 baseWithoutExt == baseName || (baseWithoutExt.startsWith("${baseName}_") &&
                         baseWithoutExt.substring(baseName.length + 1).all { it.isDigit() })

@@ -26,6 +26,7 @@ import android.text.TextWatcher
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.capturepro.app.databinding.ActivityMainBinding
 import com.capturepro.app.databinding.ActivityExpiredBinding
+import androidx.camera.core.ImageProxy
 import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -105,6 +106,7 @@ class MainActivity : AppCompatActivity() {
 
         restoreSavedFolder()
         setupCameraSpinner()
+        setupCompressionSpinner()
         setupClickListeners()
         setupTextWatchers()
 
@@ -146,6 +148,35 @@ class MainActivity : AppCompatActivity() {
                     torchOn = false
                     updateFlashButtonUi()
                     startCamera()
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+    }
+
+    private fun setupCompressionSpinner() {
+        val options = listOf(
+            "Lossless (PNG)" to "PNG",
+            "JPEG 100% (High Quality)" to "JPEG_100",
+            "JPEG 90% (Good Quality)" to "JPEG_90",
+            "JPEG 75% (Medium Quality)" to "JPEG_75"
+        )
+        val labels = options.map { it.first }
+        val adapter = ArrayAdapter(this, R.layout.spinner_item, labels)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        binding.spinnerCompression.adapter = adapter
+
+        val savedVal = prefs.compression
+        val savedIndex = options.indexOfFirst { it.second == savedVal }.coerceAtLeast(0)
+        binding.spinnerCompression.setSelection(savedIndex)
+
+        binding.spinnerCompression.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, pos: Int, id: Long
+                ) {
+                    val newVal = options[pos].second
+                    prefs.compression = newVal
+                    asyncUpdateTagCountAndPreview()
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
@@ -295,55 +326,77 @@ class MainActivity : AppCompatActivity() {
         binding.etMinQty.isEnabled = false
         binding.btnScan.isEnabled = false
 
-        // ── Determine unique filename ────────────────────────────────────────
-        val fileName = TagNoResolver.resolveFileName(folder, tagNo)
-        // DocumentFile.createFile uses the MIME display name (without extension for JPEG)
-        val newFile = folder.createFile("image/jpeg", fileName.removeSuffix(".jpg")) ?: run {
-            showToast("Could not create file '$fileName' in chosen folder.")
-            asyncUpdateTagCountAndPreview()
-            return
-        }
-
-        val outputStream = try {
-            contentResolver.openOutputStream(newFile.uri)
-                ?: throw IOException("Null output stream")
-        } catch (ex: Exception) {
-            newFile.delete()
-            showToast("Write error: ${ex.message}")
-            asyncUpdateTagCountAndPreview()
-            return
-        }
-
-        // ── Disable button during capture ─────────────────────────────────────
+        // ── Capture the image as an ImageProxy ───────────────────────────────
         binding.btnCapture.isEnabled = false
         binding.btnCapture.text = "Saving…"
 
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(outputStream).build()
-
         imgCapture.takePicture(
-            outputOptions,
             ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
+            object : ImageCapture.OnImageCapturedCallback() {
+                override fun onCaptureSuccess(imageProxy: ImageProxy) {
+                    cameraExecutor.execute {
+                        try {
+                            // Extract bitmap (toBitmap() handles rotation automatically)
+                            val bitmap = imageProxy.toBitmap()
+                            imageProxy.close()
 
-                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    runCatching { outputStream.close() }
+                            // Get user selected compression method
+                            val compSetting = prefs.compression
+                            val (mimeType, ext) = if (compSetting == "PNG") {
+                                "image/png" to "png"
+                            } else {
+                                "image/jpeg" to "jpg"
+                            }
 
-                    prefs.totalCount++
+                            // Determine unique filename
+                            val fileName = TagNoResolver.resolveFileName(folder, tagNo, ext)
+                            val newFile = folder.createFile(mimeType, fileName.removeSuffix(".$ext"))
+                            if (newFile == null) {
+                                runOnUiThread {
+                                    showToast("Could not create file '$fileName' in chosen folder.")
+                                    resetCaptureButton()
+                                    asyncUpdateTagCountAndPreview()
+                                }
+                                return@execute
+                            }
 
-                    val bmp = decodeThumbnail(newFile.uri)
-                    runOnUiThread {
-                        if (bmp != null) {
-                            binding.ivLastImagePreview.setImageBitmap(bmp)
+                            val outputStream = contentResolver.openOutputStream(newFile.uri)
+                                ?: throw IOException("Null output stream")
+
+                            outputStream.use { os ->
+                                if (compSetting == "PNG") {
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, os)
+                                } else {
+                                    val quality = when (compSetting) {
+                                        "JPEG_100" -> 100
+                                        "JPEG_75"  -> 75
+                                        else       -> 90
+                                    }
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, os)
+                                }
+                            }
+
+                            prefs.totalCount++
+                            val bmp = decodeThumbnail(newFile.uri)
+                            runOnUiThread {
+                                if (bmp != null) {
+                                    binding.ivLastImagePreview.setImageBitmap(bmp)
+                                }
+                                showToast("✓ Saved  →  $fileName")
+                                resetCaptureButton()
+                                asyncUpdateTagCountAndPreview()
+                            }
+                        } catch (ex: Exception) {
+                            runOnUiThread {
+                                showToast("Save failed: ${ex.localizedMessage ?: "Unknown error"}")
+                                resetCaptureButton()
+                                asyncUpdateTagCountAndPreview()
+                            }
                         }
-                        showToast("✓ Saved  →  $fileName")
-                        resetCaptureButton()
-                        asyncUpdateTagCountAndPreview()
                     }
                 }
 
                 override fun onError(ex: ImageCaptureException) {
-                    runCatching { outputStream.close() }
-                    newFile.delete()
                     runOnUiThread {
                         showToast("Capture failed: ${ex.message}")
                         resetCaptureButton()

@@ -26,10 +26,16 @@ class PrefsManager(context: Context) {
         get() = prefs.getInt(KEY_MIN_QTY, 1)
         set(value) = prefs.edit().putInt(KEY_MIN_QTY, value).apply()
 
+    /** Selected image quality / format configuration. Default is "JPEG_90". */
+    var compression: String
+        get() = prefs.getString(KEY_COMPRESSION, "JPEG_90") ?: "JPEG_90"
+        set(value) = prefs.edit().putString(KEY_COMPRESSION, value).apply()
+
     companion object {
         private const val PREFS_NAME    = "capture_pro_prefs"
         private const val KEY_FOLDER_URI  = "folder_uri"
         private const val KEY_TOTAL_COUNT = "total_count"
         private const val KEY_MIN_QTY     = "min_qty"
+        private const val KEY_COMPRESSION = "compression"
     }
 }

@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var saveMessage: String = ""
     @State private var showToast: Bool = false
     @State private var selectedCameraIndex = 0
+    @AppStorage("compression") private var compression: String = "JPEG_90"
     
     // Sheet presentation
     @State private var showFolderPicker = false
@@ -124,6 +125,48 @@ struct ContentView: View {
                         Divider()
                             .background(Color(red: 30/255, green: 42/255, blue: 56/255))
                             .padding(.vertical, 4)
+                        
+                        // Quality Selection Row
+                        HStack(spacing: 8) {
+                            Text("Quality")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 62, alignment: .leading)
+                            
+                            Menu {
+                                Button("Lossless (PNG)") {
+                                    compression = "PNG"
+                                    updateTagCountAndPreview()
+                                }
+                                Button("JPEG 100% (High Quality)") {
+                                    compression = "JPEG_100"
+                                    updateTagCountAndPreview()
+                                }
+                                Button("JPEG 90% (Good Quality)") {
+                                    compression = "JPEG_90"
+                                    updateTagCountAndPreview()
+                                }
+                                Button("JPEG 75% (Medium Quality)") {
+                                    compression = "JPEG_75"
+                                    updateTagCountAndPreview()
+                                }
+                            } label: {
+                                HStack {
+                                    Text(selectedCompressionLabel)
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.white)
+                                    Spacer()
+                                    Image(systemName: "chevron.down")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Color(red: 136/255, green: 153/255, blue: 170/255))
+                                }
+                                .padding(.horizontal, 12)
+                                .frame(height: 46)
+                                .background(Color(red: 28/255, green: 37/255, blue: 53/255))
+                                .cornerRadius(6)
+                                .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color(red: 46/255, green: 64/255, blue: 96/255), lineWidth: 1))
+                            }
+                        }
                         
                         // Tag No Row
                         HStack(spacing: 8) {
@@ -380,23 +423,65 @@ struct ContentView: View {
         
         cameraManager.capturePhoto { result in
             switch result {
-            case .success(let data):
-                let fileName = TagNoResolver.resolveFileName(directory: folder, tag: tag)
-                let destinationUrl = folder.appendingPathComponent(fileName)
-                
-                do {
-                    try data.write(to: destinationUrl)
-                    triggerToast("✓ Saved → \(fileName)")
-                    updateTagCountAndPreview()
-                } catch {
-                    triggerToast("Failed to save image: \(error.localizedDescription)")
+            case .success(let rawData):
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let finalData: Data?
+                    if compression == "PNG" {
+                        if let image = UIImage(data: rawData) {
+                            finalData = image.pngData()
+                        } else {
+                            finalData = nil
+                        }
+                    } else {
+                        let quality: CGFloat
+                        switch compression {
+                        case "JPEG_100": quality = 1.0
+                        case "JPEG_75":  quality = 0.75
+                        default:         quality = 0.90
+                        }
+                        if let image = UIImage(data: rawData) {
+                            finalData = image.jpegData(compressionQuality: quality)
+                        } else {
+                            finalData = nil
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        guard let dataToSave = finalData else {
+                            triggerToast("Failed to process image data.")
+                            isSaving = false
+                            return
+                        }
+                        
+                        let ext = (compression == "PNG") ? "png" : "jpg"
+                        let fileName = TagNoResolver.resolveFileName(directory: folder, tag: tag, ext: ext)
+                        let destinationUrl = folder.appendingPathComponent(fileName)
+                        
+                        do {
+                            try dataToSave.write(to: destinationUrl)
+                            triggerToast("✓ Saved → \(fileName)")
+                            updateTagCountAndPreview()
+                        } catch {
+                            triggerToast("Failed to save image: \(error.localizedDescription)")
+                        }
+                        isSaving = false
+                    }
                 }
-                isSaving = false
                 
             case .failure(let error):
                 triggerToast("Capture failed: \(error.localizedDescription)")
                 isSaving = false
             }
+        }
+    }
+    
+    private var selectedCompressionLabel: String {
+        switch compression {
+        case "PNG": return "Lossless (PNG)"
+        case "JPEG_100": return "JPEG 100% (High Quality)"
+        case "JPEG_90": return "JPEG 90% (Good Quality)"
+        case "JPEG_75": return "JPEG 75% (Medium Quality)"
+        default: return "JPEG 90% (Good Quality)"
         }
     }
     

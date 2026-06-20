@@ -19,7 +19,7 @@ struct TagNoResolver {
             if resourceValues?.isDirectory == true { continue }
             
             let name = fileURL.lastPathComponent.lowercased()
-            if name.hasSuffix(".jpg") || name.hasSuffix(".jpeg") {
+            if name.hasSuffix(".jpg") || name.hasSuffix(".jpeg") || name.hasSuffix(".png") {
                 let baseName = fileURL.deletingPathExtension().lastPathComponent.lowercased()
                 if baseName == targetPrefix {
                     count += 1
@@ -52,7 +52,7 @@ struct TagNoResolver {
             if resourceValues?.isDirectory == true { continue }
             
             let name = fileURL.lastPathComponent.lowercased()
-            if name.hasSuffix(".jpg") || name.hasSuffix(".jpeg") {
+            if name.hasSuffix(".jpg") || name.hasSuffix(".jpeg") || name.hasSuffix(".png") {
                 let baseName = fileURL.deletingPathExtension().lastPathComponent.lowercased()
                 let isMatch = baseName == targetPrefix || (baseName.hasPrefix("\(targetPrefix)_") && Int(baseName.replacingOccurrences(of: "\(targetPrefix)_", with: "")) != nil)
                 
@@ -66,17 +66,17 @@ struct TagNoResolver {
         return matchingFiles.sorted(by: { $0.1 > $1.1 }).first?.0
     }
     
-    static func resolveFileName(directory: URL, tag: String) -> String {
+    static func resolveFileName(directory: URL, tag: String, ext: String) -> String {
         let nameWithoutExt = tag
         let fileManager = FileManager.default
-        let path = directory.appendingPathComponent("\(nameWithoutExt).jpg")
+        let path = directory.appendingPathComponent("\(nameWithoutExt).\(ext)")
         if !fileManager.fileExists(atPath: path.path) {
-            return "\(nameWithoutExt).jpg"
+            return "\(nameWithoutExt).\(ext)"
         }
         
         var counter = 2
         while true {
-            let candidate = "\(nameWithoutExt)_\(counter).jpg"
+            let candidate = "\(nameWithoutExt)_\(counter).\(ext)"
             let candidatePath = directory.appendingPathComponent(candidate)
             if !fileManager.fileExists(atPath: candidatePath.path) {
                 return candidate

@@ -168,6 +168,34 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
 
+            <!-- ── Compression / Quality Row ──────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:text="Quality"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="13sp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerCompression"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_spinner"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:overlapAnchor="false"
+                    android:spinnerMode="dropdown"/>
+            </LinearLayout>
+
             <!-- ── Tag No Row ──────────────────────────────────────────────── -->
             <LinearLayout
                 android:layout_width="match_parent"
