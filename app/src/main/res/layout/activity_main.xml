@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_dark">
+    android:layout_height="match_parent">
 
-    <!-- ═══════════════════════════════ HEADER ════════════════════════════ -->
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bg_dark">
+
+        <!-- ═══════════════════════════════ HEADER ════════════════════════════ -->
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
@@ -69,7 +74,53 @@
                 android:layout_marginTop="1dp"/>
         </LinearLayout>
 
+        <!-- Logged-in user name -->
+        <TextView
+            android:id="@+id/tvLoggedInUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:visibility="gone"
+            android:layout_marginEnd="6dp"/>
+
+        <!-- Admin Panel button (only shown for admin) -->
+        <TextView
+            android:id="@+id/btnAdminPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="⚙ Admin"
+            android:textColor="@color/accent_orange"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_input"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:layout_marginEnd="6dp"/>
+
+        <!-- Logout button -->
+        <TextView
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="⏻"
+            android:textColor="#FF5252"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@drawable/bg_input"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"/>
+
     </LinearLayout>
+
 
     <!-- ═══════════════════════════ SCROLLABLE BODY ═══════════════════════ -->
     <ScrollView
@@ -119,12 +170,12 @@
                         android:ellipsize="start"
                         android:singleLine="true"/>
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnChangeLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:text="Change Location"
-                        android:textColor="@color/white"
+                        android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textAllCaps="false"
                         android:background="@drawable/bg_btn_location"
@@ -152,11 +203,14 @@
 
                     <ImageView
                         android:id="@+id/ivLastImagePreview"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:scaleType="centerCrop"
                         android:background="@drawable/bg_thumbnail_border"
-                        android:padding="2dp"/>
+                        android:padding="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="Tap to enlarge"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -237,18 +291,19 @@
                     android:layout_marginStart="8dp"
                     android:contentDescription="Scan Barcode"/>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnReset"
                     android:layout_width="72dp"
                     android:layout_height="46dp"
                     android:text="Reset"
-                    android:textColor="@color/white"
+                    android:textColor="#FFFFFF"
                     android:textSize="13sp"
                     android:textAllCaps="false"
                     android:background="@drawable/bg_btn_reset"
                     android:layout_marginStart="8dp"
                     android:stateListAnimator="@null"/>
             </LinearLayout>
+
 
             <!-- ── Total Count Row ────────────────────────────────────────── -->
             <LinearLayout
@@ -285,19 +340,69 @@
                     android:singleLine="true"/>
             </LinearLayout>
 
+            <!-- ── Show Size Switch Row ──────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Show Size overlay on camera"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchShowSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Identify Object (AI)"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchIdentifyObject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"/>
+            </LinearLayout>
+
             <!-- ── Preview Frame ──────────────────────────────────────────── -->
             <FrameLayout
+                android:id="@+id/previewContainer"
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_preview_frame"
                 android:padding="3dp"
                 android:layout_marginTop="12dp">
 
-                <!-- Live camera feed -->
+                <!-- Live camera feed — height set dynamically in code (4:3 ratio) -->
                 <androidx.camera.view.PreviewView
                     android:id="@+id/previewView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    app:scaleType="fillCenter"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"/>
 
                  <!-- Placeholder before camera starts -->
                 <TextView
@@ -338,6 +443,154 @@
                         android:textSize="9sp"
                         android:layout_marginTop="2dp"/>
                 </LinearLayout>
+
+                <!-- Enlarge Preview button — top-right overlay -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnEnlargePreview"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_btn_flash_off"
+                        android:src="@drawable/ic_enlarge"
+                        android:padding="8dp"
+                        android:contentDescription="Enlarge Camera Preview"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EXPAND"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="9sp"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <!-- Overlay container for measurement — visible only when show size is ON -->
+                <RelativeLayout
+                    android:id="@+id/layoutSizeOverlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <!-- Target box centered in preview -->
+                    <View
+                        android:id="@+id/viewMeasurementTarget"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="50dp"
+                        android:layout_marginVertical="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/bg_measurement_target"/>
+
+                    <!-- Measurement labels container -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_measurement_label"
+                        android:padding="8dp"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:elevation="4dp">
+
+                        <TextView
+                            android:id="@+id/tvMeasuredDimensions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detecting size..."
+                            android:textColor="#FF9800"
+                            android:textStyle="bold"
+                            android:textSize="13sp"/>
+
+                        <TextView
+                            android:id="@+id/tvMeasuredDiag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Align object in target box"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!-- Overlay container for Google Lens — visible only when identify is ON -->
+                <LinearLayout
+                    android:id="@+id/layoutIdentifyOverlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_measurement_label"
+                    android:padding="10dp"
+                    android:elevation="4dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="2dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🔍 Google Lens"
+                            android:textColor="#4285F4"
+                            android:textStyle="bold"
+                            android:textSize="11sp"/>
+
+                        <ProgressBar
+                            android:id="@+id/pbIdentifyLoader"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="6dp"
+                            android:indeterminateTint="#4285F4"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/btnReIdentify"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Search"
+                            android:textColor="#FF9800"
+                            android:textSize="9sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="8dp"
+                            android:paddingHorizontal="5dp"
+                            android:paddingVertical="2dp"
+                            android:background="@drawable/bg_btn_action_small"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvIdentifyImageSource"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Capture photo first"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="9sp"
+                        android:layout_marginBottom="2dp"/>
+
+                    <TextView
+                        android:id="@+id/tvIdentifyResults"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="160dp"
+                        android:text="Tap Search to identify"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:lineSpacingExtra="2dp"/>
+                </LinearLayout>
             </FrameLayout>
 
             <!-- ── Capture Button ─────────────────────────────────────────── -->
@@ -374,6 +627,161 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"/>
 
+            <!-- ── Text Annotation Row ────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:text="Text"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="13sp"/>
+
+                <EditText
+                    android:id="@+id/etObjectSize"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:hint="Enter text..."
+                    android:textColorHint="@color/text_secondary"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:inputType="textNoSuggestions"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+
+    <!-- ═════════════════ FULLSCREEN CAMERA OVERLAY ═════════════════ -->
+    <RelativeLayout
+        android:id="@+id/layoutFullscreenCameraOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:visibility="gone"
+        android:elevation="20dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <!-- Fullscreen Live Camera Feed -->
+        <androidx.camera.view.PreviewView
+            android:id="@+id/fullscreenPreviewView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:scaleType="fillCenter" />
+
+        <!-- Close (X) button — Top Right (Dark square box matching sample picture) -->
+        <FrameLayout
+            android:id="@+id/btnFullscreenClose"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_fullscreen_btn_box"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="✕"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Hint text above capture button -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnFullscreenCapture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:text="Tap ✕ to close fullscreen"
+            android:textColor="#D0FFFFFF"
+            android:textSize="12sp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="5dp"
+            android:background="@drawable/bg_fullscreen_pill_hint" />
+
+        <!-- Circular Red Capture Button — Bottom Center (Matching sample picture) -->
+        <RelativeLayout
+            android:id="@+id/btnFullscreenCapture"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/bg_fullscreen_capture_ring"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_fullscreen_capture_circle" />
+        </RelativeLayout>
+
+        <!-- Zoom In / Out Controls (- / +) — Bottom Right (Matching sample picture) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_fullscreen_btn_box"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="4dp">
+
+            <TextView
+                android:id="@+id/btnZoomOut"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="−"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:background="#40FFFFFF" />
+
+            <TextView
+                android:id="@+id/btnZoomIn"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

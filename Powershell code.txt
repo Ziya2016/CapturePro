@@ -1,0 +1,3 @@
+cd "E:\Google Antigravity\Capture Pro"
+git remote add origin https://github.com/docqstore1983-anees/CapturePro.git
+git push -u origin main

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.capturepro.app'
+    namespace 'com.capturepro.photo'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.capturepro.app"
+        applicationId "com.capturepro.photo"
         minSdk 26
         targetSdk 34
         versionCode 1
@@ -56,6 +56,8 @@ dependencies {
 
     // Kotlin Coroutines (used for async operations)
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
-    // Google Play Services Code Scanner for Barcode/QR Code scanning
+    // Google Play Services Code Scanner (primary — requires Play Services)
     implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
+    // ML Kit Bundled Barcode Scanning (fallback — works fully offline, no Play Services needed)
+    implementation 'com.google.mlkit:barcode-scanning:17.3.0'
 }
