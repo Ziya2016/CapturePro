@@ -29,26 +29,19 @@ jobs:
       - name: Verify Flutter installation
         run: flutter --version
 
-      - name: Generate full iOS Runner project
-        working-directory: CaptureProiOS
-        run: |
-          flutter create --platforms=ios --org com.capturepro.photo --project-name capture_pro . || true
-
       - name: Get Flutter Dependencies
         working-directory: CaptureProiOS
         run: flutter pub get
 
-      - name: Install CocoaPods dependencies
+      - name: Install CocoaPods
         working-directory: CaptureProiOS/ios
-        run: |
-          pod install --repo-update
+        run: pod install --repo-update
 
       - name: Build iOS (no codesign)
         working-directory: CaptureProiOS
-        run: |
-          flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign
 
-      - name: Find and Package .ipa
+      - name: Package .ipa
         working-directory: CaptureProiOS
         run: |
           APP_PATH=$(find build/ios/iphoneos -name "*.app" -type d | head -1)
