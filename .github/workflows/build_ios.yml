@@ -14,6 +14,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set up Xcode 15
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.4'
+
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
@@ -24,28 +29,33 @@ jobs:
       - name: Verify Flutter installation
         run: flutter --version
 
-      - name: Generate iOS Runner Project
+      - name: Generate full iOS Runner project
         working-directory: CaptureProiOS
-        run: |
-          flutter create --platforms=ios --org com.capturepro.photo . --project-name capture_pro
+        run: flutter create --platforms=ios --org com.capturepro.photo --project-name capture_pro .
 
       - name: Get Flutter Dependencies
         working-directory: CaptureProiOS
         run: flutter pub get
 
+      - name: Install CocoaPods dependencies
+        working-directory: CaptureProiOS/ios
+        run: |
+          gem install cocoapods --no-document
+          pod install --repo-update
+
       - name: Build iOS (no codesign)
         working-directory: CaptureProiOS
-        run: |
-          flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign --verbose
 
-      - name: Package .ipa
+      - name: Find and Package .ipa
         working-directory: CaptureProiOS
         run: |
-          APP_PATH=$(find build/ios/iphoneos -name "*.app" | head -1)
-          echo "Found app: $APP_PATH"
+          APP_PATH=$(find build/ios/iphoneos -name "*.app" -type d | head -1)
+          echo "Found app at: $APP_PATH"
           mkdir -p Payload
           cp -r "$APP_PATH" Payload/
           zip -r CapturePro_iOS.ipa Payload/
+          ls -lh CapturePro_iOS.ipa
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
