@@ -1,0 +1,279 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000012900000100000001 /* CaptureProApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000001 /* CaptureProApp.swift */; };
+		A10000012900000100000002 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000002 /* LoginView.swift */; };
+		A10000012900000100000003 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000003 /* CreateAccountView.swift */; };
+		A10000012900000100000004 /* AdminPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000004 /* AdminPanelView.swift */; };
+		A10000012900000100000005 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000005 /* MainView.swift */; };
+		A10000012900000100000006 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000006 /* CameraView.swift */; };
+		A10000012900000100000007 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000007 /* BarcodeScannerView.swift */; };
+		A10000012900000100000008 /* LensPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000008 /* LensPreviewView.swift */; };
+		A10000012900000100000009 /* FullScreenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000012900000100000009 /* FullScreenImageView.swift */; };
+		A1000001290000010000000A /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001290000010000000A /* UserManager.swift */; };
+		A1000001290000010000000B /* PrefsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001290000010000000B /* PrefsManager.swift */; };
+		A1000001290000010000000C /* TagNoResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001290000010000000C /* TagNoResolver.swift */; };
+		A1000001290000010000000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1000001290000010000000D /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		P10000012900000100000001 /* CapturePro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CapturePro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F10000012900000100000001 /* CaptureProApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureProApp.swift; sourceTree = "<group>"; };
+		F10000012900000100000002 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		F10000012900000100000003 /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
+		F10000012900000100000004 /* AdminPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPanelView.swift; sourceTree = "<group>"; };
+		F10000012900000100000005 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F10000012900000100000006 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		F10000012900000100000007 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
+		F10000012900000100000008 /* LensPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensPreviewView.swift; sourceTree = "<group>"; };
+		F10000012900000100000009 /* FullScreenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageView.swift; sourceTree = "<group>"; };
+		F1000001290000010000000A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		F1000001290000010000000B /* PrefsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsManager.swift; sourceTree = "<group>"; };
+		F1000001290000010000000C /* TagNoResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagNoResolver.swift; sourceTree = "<group>"; };
+		F1000001290000010000000D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1000001290000010000000E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B10000012900000100000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G10000012900000100000001 = {
+			isa = PBXGroup;
+			children = (
+				G10000012900000100000002 /* CapturePro */,
+				P10000012900000100000001 /* CapturePro.app */,
+			);
+			sourceTree = "<group>";
+		};
+		G10000012900000100000002 /* CapturePro */ = {
+			isa = PBXGroup;
+			children = (
+				G10000012900000100000003 /* App */,
+				G10000012900000100000004 /* Models */,
+				G10000012900000100000005 /* Views */,
+				F1000001290000010000000D /* Assets.xcassets */,
+			);
+			path = CapturePro;
+			sourceTree = "<group>";
+		};
+		G10000012900000100000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F10000012900000100000001 /* CaptureProApp.swift */,
+				F1000001290000010000000E /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		G10000012900000100000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F1000001290000010000000A /* UserManager.swift */,
+				F1000001290000010000000B /* PrefsManager.swift */,
+				F1000001290000010000000C /* TagNoResolver.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		G10000012900000100000005 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F10000012900000100000002 /* LoginView.swift */,
+				F10000012900000100000003 /* CreateAccountView.swift */,
+				F10000012900000100000004 /* AdminPanelView.swift */,
+				F10000012900000100000005 /* MainView.swift */,
+				F10000012900000100000006 /* CameraView.swift */,
+				F10000012900000100000007 /* BarcodeScannerView.swift */,
+				F10000012900000100000008 /* LensPreviewView.swift */,
+				F10000012900000100000009 /* FullScreenImageView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		T10000012900000100000001 /* CapturePro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C10000012900000100000001 /* Build configuration list for PBXNativeTarget "CapturePro" */;
+			buildPhases = (
+				S10000012900000100000001 /* Sources */,
+				B10000012900000100000001 /* Frameworks */,
+				R10000012900000100000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CapturePro;
+			productName = CapturePro;
+			productReference = P10000012900000100000001 /* CapturePro.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PR1000012900000100000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					T10000012900000100000001 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+				};
+			};
+			buildConfigurationList = C10000012900000100000002 /* Build configuration list for PBXProject "CapturePro" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = G10000012900000100000001;
+			productRefGroup = G10000012900000100000001;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				T10000012900000100000001 /* CapturePro */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		R10000012900000100000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001290000010000000D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		S10000012900000100000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000012900000100000001 /* CaptureProApp.swift in Sources */,
+				A10000012900000100000002 /* LoginView.swift in Sources */,
+				A10000012900000100000003 /* CreateAccountView.swift in Sources */,
+				A10000012900000100000004 /* AdminPanelView.swift in Sources */,
+				A10000012900000100000005 /* MainView.swift in Sources */,
+				A10000012900000100000006 /* CameraView.swift in Sources */,
+				A10000012900000100000007 /* BarcodeScannerView.swift in Sources */,
+				A10000012900000100000008 /* LensPreviewView.swift in Sources */,
+				A10000012900000100000009 /* FullScreenImageView.swift in Sources */,
+				A1000001290000010000000A /* UserManager.swift in Sources */,
+				A1000001290000010000000B /* PrefsManager.swift in Sources */,
+				A1000001290000010000000C /* TagNoResolver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CF1000012900000100000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = CapturePro/App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.capturepro.photo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CF1000012900000100000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = CapturePro/App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.capturepro.photo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CF1000012900000100000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CF1000012900000100000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C10000012900000100000001 /* Build configuration list for PBXNativeTarget "CapturePro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF1000012900000100000001 /* Debug */,
+				CF1000012900000100000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C10000012900000100000002 /* Build configuration list for PBXProject "CapturePro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF1000012900000100000003 /* Debug */,
+				CF1000012900000100000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PR1000012900000100000001 /* Project object */;
+}

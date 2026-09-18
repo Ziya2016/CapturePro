@@ -1,0 +1,47 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    name: Build iOS App (.ipa)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode.app
+
+      - name: Build iOS Archive (Unsigned)
+        run: |
+          cd CaptureProiOS
+          xcodebuild archive \
+            -project CapturePro.xcodeproj \
+            -scheme CapturePro \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath build/CapturePro.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+
+      - name: Package Payload into IPA
+        run: |
+          cd CaptureProiOS
+          mkdir -p build/Payload
+          cp -R build/CapturePro.xcarchive/Products/Applications/CapturePro.app build/Payload/
+          cd build
+          zip -r CapturePro.ipa Payload
+
+      - name: Upload iOS IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CapturePro-iOS-Unsigned
+          path: CaptureProiOS/build/CapturePro.ipa
