@@ -8,7 +8,7 @@ on:
 jobs:
   build_ios:
     name: Build Flutter iOS App
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - name: Checkout Repository
@@ -17,31 +17,39 @@ jobs:
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.24.0'
           channel: 'stable'
           cache: true
 
-      - name: Recreate Native iOS Xcode Runner
-        run: flutter create --platforms=ios --org com.capturepro.photo .
+      - name: Verify Flutter installation
+        run: flutter --version
+
+      - name: Generate iOS Runner Project
         working-directory: CaptureProiOS
+        run: |
+          flutter create --platforms=ios --org com.capturepro.photo . --project-name capture_pro
 
       - name: Get Flutter Dependencies
+        working-directory: CaptureProiOS
         run: flutter pub get
-        working-directory: CaptureProiOS
 
-      - name: Build iOS Application
-        run: flutter build ios --release --no-codesign
+      - name: Build iOS (no codesign)
         working-directory: CaptureProiOS
-
-      - name: Package IPA Artifact
         run: |
-          cd build/ios/iphoneos
-          mkdir -p Payload
-          cp -r Runner.app Payload/
-          zip -r CapturePro_iOS.ipa Payload
-        working-directory: CaptureProiOS
+          flutter build ios --release --no-codesign
 
-      - name: Upload iOS Build Artifact
+      - name: Package .ipa
+        working-directory: CaptureProiOS
+        run: |
+          APP_PATH=$(find build/ios/iphoneos -name "*.app" | head -1)
+          echo "Found app: $APP_PATH"
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/
+          zip -r CapturePro_iOS.ipa Payload/
+
+      - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: CapturePro_iOS_IPA
-          path: CaptureProiOS/build/ios/iphoneos/CapturePro_iOS.ipa
+          path: CaptureProiOS/CapturePro_iOS.ipa
+          retention-days: 30
