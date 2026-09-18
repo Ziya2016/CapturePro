@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct FullScreenImageView: View {
     @Environment(\.presentationMode) var presentationMode

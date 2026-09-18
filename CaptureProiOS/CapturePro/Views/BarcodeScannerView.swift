@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import UIKit
 
 struct BarcodeScannerView: UIViewControllerRepresentable {
     var onCodeScanned: (String) -> Void

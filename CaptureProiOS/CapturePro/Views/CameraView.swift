@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import UIKit
 
 struct CameraPreviewHolder: UIViewRepresentable {
     @ObservedObject var cameraController: CameraController

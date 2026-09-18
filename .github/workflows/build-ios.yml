@@ -30,7 +30,8 @@ jobs:
             -archivePath build/CapturePro.xcarchive \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY=""
+            CODE_SIGN_IDENTITY="" \
+            COMPILER_INDEX_STORE_ENABLE=NO
 
       - name: Package Payload into IPA
         run: |
