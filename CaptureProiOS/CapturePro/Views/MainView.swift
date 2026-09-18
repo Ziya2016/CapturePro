@@ -1,11 +1,12 @@
 import SwiftUI
+import UIKit
 
 struct MainView: View {
     @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     @AppStorage("loggedInUser") private var loggedInUser: String = ""
     @AppStorage("isAdmin") private var isAdmin: Bool = false
 
-    @StateObject private var prefs = PrefsManager.shared
+    @ObservedObject private var prefs = PrefsManager.shared
     @StateObject private var cameraController = CameraController()
 
     @State private var tagNo: String = ""
@@ -173,7 +174,7 @@ struct MainView: View {
                                 .onChange(of: tagNo) { newValue in
                                     if newValue != lastTagNo {
                                         lastTagNo = newValue
-                                        prefs.objectSize = "" // Text field auto-reset when tag no changes
+                                        prefs.objectSize = ""
                                     }
                                     updateCountAndPreview()
                                 }
@@ -401,7 +402,9 @@ struct MainView: View {
             }
         }
         .sheet(isPresented: $showLensPreview) {
-            LensPreviewView(targetURL: URL(string: "https://lens.google.com")!)
+            if let url = URL(string: "https://lens.google.com") {
+                LensPreviewView(targetURL: url)
+            }
         }
         .alert(isPresented: $showLogoutAlert) {
             Alert(

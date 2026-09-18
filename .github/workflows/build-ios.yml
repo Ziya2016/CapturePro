@@ -19,25 +19,27 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -switch /Applications/Xcode.app
 
-      - name: Build iOS Archive (Unsigned)
+      - name: Build iOS App (Unsigned)
         run: |
           cd CaptureProiOS
-          xcodebuild archive \
+          xcodebuild build \
             -project CapturePro.xcodeproj \
             -scheme CapturePro \
             -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
             -configuration Release \
-            -archivePath build/CapturePro.xcarchive \
+            -derivedDataPath build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES \
             COMPILER_INDEX_STORE_ENABLE=NO
 
       - name: Package Payload into IPA
         run: |
           cd CaptureProiOS
           mkdir -p build/Payload
-          cp -R build/CapturePro.xcarchive/Products/Applications/CapturePro.app build/Payload/
+          cp -R build/DerivedData/Build/Products/Release-iphoneos/CapturePro.app build/Payload/
           cd build
           zip -r CapturePro.ipa Payload
 
