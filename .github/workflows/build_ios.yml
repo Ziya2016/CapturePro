@@ -20,6 +20,10 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Recreate Native iOS Xcode Runner
+        run: flutter create --platforms=ios --org com.capturepro.photo .
+        working-directory: CaptureProiOS
+
       - name: Get Flutter Dependencies
         run: flutter pub get
         working-directory: CaptureProiOS
